@@ -1,4 +1,4 @@
-package in.obvious.assignments.cosmos.client;
+package in.obvious.assignments.cosmos.client.foregroundcomponents;
 
 import android.os.Bundle;
 

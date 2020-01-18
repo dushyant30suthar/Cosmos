@@ -23,14 +23,14 @@ public class GalaxyRepository {
     }
 
     /*
-     * In this method we just implement the actual implementation of things which are commanded by ui.*/
+     * In this method we just add the actual implementation of things which are commanded by ui.*/
 
     public DomainRequestObservable<List<Galaxy>> getGalaxyListObservable() {
 
         return new DomainRequestObservable<List<Galaxy>>() {
             @Override
             protected List<Galaxy> loadFromDatabase() {
-                return null;
+                return galaxyDatabaseDao.getGalaxyList();
             }
 
             @Override
@@ -38,14 +38,20 @@ public class GalaxyRepository {
                 return galaxyNetworkDao.getGalaxyList();
             }
 
+            /*
+             * Right now we just decide that if data is already there in database then just present it from here.
+             * This is not valid in production because it may change in every second so this kind of decisions are
+             * made here. In production we may look for timestamp and some logic to decide whether we need to
+             * make a network call or not.*/
+
             @Override
             protected boolean shouldFetchData(List<Galaxy> data) {
-                return true;
+                return data == null;
             }
 
             @Override
             protected void saveDataToDatabase(List<Galaxy> data) {
-
+                galaxyDatabaseDao.insert(data);
             }
 
             @Override

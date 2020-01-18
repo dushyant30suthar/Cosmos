@@ -1,6 +1,5 @@
 package in.obvious.assignments.cosmos.domain.galaxy.datasources;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -17,10 +16,10 @@ public interface GalaxyDatabaseDao {
     long[] insert(List<Galaxy> galaxyList);
 
     @Query("SELECT * from galaxy")
-    LiveData<List<Galaxy>> getGalaxyList();
+    List<Galaxy> getGalaxyList();
 
     @Query("SELECT * from galaxy WHERE galaxyId = :id")
-    LiveData<Galaxy> getGalaxy(String id);
+    Galaxy getGalaxy(String id);
 
     @Query("DELETE FROM galaxy")
     void removeAllGalaxies();
