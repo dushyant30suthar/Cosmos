@@ -10,13 +10,13 @@ public class DomainRequest<T> {
     private State currentState;
     private T data;
     private int statusCode;
-    private RequestError requestError;
+    private DomainRequestError domainRequestError;
 
     private DomainRequest(@NonNull State currentStatus, @Nullable T data,
-                          @Nullable RequestError requestError, int statusCode) {
+                          @Nullable DomainRequestError domainRequestError, int statusCode) {
         this.currentState = currentStatus;
         this.data = data;
-        this.requestError = requestError;
+        this.domainRequestError = domainRequestError;
         this.statusCode = statusCode;
     }
 
@@ -24,8 +24,8 @@ public class DomainRequest<T> {
         return new DomainRequest<>(State.SUCCEED, data, null, statusCode);
     }
 
-    public static <T> DomainRequest<T> failed(RequestError requestError, @Nullable T data) {
-        return new DomainRequest<>(State.FAILED, data, requestError, requestError.getStatusCode());
+    public static <T> DomainRequest<T> failed(DomainRequestError domainRequestError, @Nullable T data) {
+        return new DomainRequest<>(State.FAILED, data, domainRequestError, domainRequestError.getStatusCode());
     }
 
     public static <T> DomainRequest<T> loading(@Nullable T data) {
@@ -48,8 +48,8 @@ public class DomainRequest<T> {
         return data;
     }
 
-    public RequestError getRequestError() {
-        return requestError;
+    public DomainRequestError getDomainRequestError() {
+        return domainRequestError;
     }
 
     public enum State {

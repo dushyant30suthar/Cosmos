@@ -67,12 +67,12 @@ public abstract class DomainRequestObservable<ResultType> extends Observable<Dom
 
                 Log.e(TAG, "Request Failure " + response.errorBody());
 
-                RequestError requestError = new Gson().fromJson(response.errorBody().string(),
-                        RequestError.class);
+                DomainRequestError domainRequestError = new Gson().fromJson(response.errorBody().string(),
+                        DomainRequestError.class);
 
-                requestError.setStatusCode(response.code());
+                domainRequestError.setStatusCode(response.code());
 
-                onFetchFailed(new RequestErrorException(requestError));
+                onFetchFailed(new DomainRequestErrorException(domainRequestError));
 
             } else
                 onFetchFailed(new Throwable("No Data Received"));
