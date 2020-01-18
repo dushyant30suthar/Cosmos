@@ -46,7 +46,10 @@ public class GalaxyRepository {
 
             @Override
             protected boolean shouldFetchData(List<Galaxy> data) {
-                return data == null;
+                if (data != null) {
+                    return data.size() <= 0;
+                }
+                return true;
             }
 
             @Override
