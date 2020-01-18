@@ -14,7 +14,4 @@ public class DomainRequestErrorException extends Exception {
         return this.domainRequestError;
     }
 
-    public void setDomainRequestError(DomainRequestError DomainRequestError) {
-        this.domainRequestError = DomainRequestError;
-    }
 }

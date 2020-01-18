@@ -11,6 +11,7 @@ import in.obvious.assignments.cosmos.domain.galaxy.GalaxyRepository;
 import in.obvious.assignments.cosmos.domain.galaxy.datasources.GalaxyDatabaseDao;
 import in.obvious.assignments.cosmos.domain.galaxy.datasources.GalaxyNetworkDao;
 import in.obvious.assignments.cosmos.framework.application.CosmosApplication;
+import in.obvious.assignments.cosmos.framework.utils.TaskExecutors;
 
 public class ViewDomainProvider implements ViewModelProvider.Factory {
 
@@ -18,6 +19,7 @@ public class ViewDomainProvider implements ViewModelProvider.Factory {
     GalaxyNetworkDao galaxyNetworkDao;
     @Inject
     GalaxyDatabaseDao galaxyDatabaseDao;
+
     private GalaxyRepository galaxyRepository;
 
 
@@ -44,7 +46,7 @@ public class ViewDomainProvider implements ViewModelProvider.Factory {
          * Here we can create various view Models.*/
 
         if (modelClass.isAssignableFrom(GalaxyViewModel.class)) {
-            return (T) new GalaxyViewModel(galaxyRepository);
+            return (T) new GalaxyViewModel(galaxyRepository, TaskExecutors.getInstance());
         } else {
             throw new IllegalArgumentException("Unknown class name");
         }
