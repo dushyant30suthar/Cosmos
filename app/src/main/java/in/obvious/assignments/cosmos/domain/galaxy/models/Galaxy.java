@@ -1,10 +1,17 @@
 
 package in.obvious.assignments.cosmos.domain.galaxy.models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity
 public class Galaxy {
+
+    @PrimaryKey(autoGenerate = true)
+    private int galaxyId;
 
     @SerializedName("copyright")
     @Expose
@@ -95,4 +102,11 @@ public class Galaxy {
         this.url = url;
     }
 
+    public int getGalaxyId() {
+        return galaxyId;
+    }
+
+    public void setGalaxyId(int galaxyId) {
+        this.galaxyId = galaxyId;
+    }
 }

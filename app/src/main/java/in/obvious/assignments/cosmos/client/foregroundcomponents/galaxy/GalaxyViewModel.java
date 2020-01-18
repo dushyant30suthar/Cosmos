@@ -1,4 +1,11 @@
 package in.obvious.assignments.cosmos.client.foregroundcomponents.galaxy;
 
-public class GalaxyViewModel {
+import androidx.lifecycle.ViewModel;
+
+import in.obvious.assignments.cosmos.domain.galaxy.GalaxyRepository;
+
+public class GalaxyViewModel extends ViewModel {
+    public GalaxyViewModel(GalaxyRepository galaxyRepository) {
+
+    }
 }

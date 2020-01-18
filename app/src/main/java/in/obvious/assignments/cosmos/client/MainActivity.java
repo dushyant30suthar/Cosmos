@@ -1,8 +1,10 @@
-package in.obvious.assignments.cosmos;
+package in.obvious.assignments.cosmos.client;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import in.obvious.assignments.cosmos.R;
 
 public class MainActivity extends AppCompatActivity {
 

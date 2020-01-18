@@ -11,6 +11,7 @@ import dagger.Module;
 import dagger.Provides;
 import in.obvious.assignments.cosmos.BuildConfig;
 import in.obvious.assignments.cosmos.domain.galaxy.datasources.GalaxyNetworkDao;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -28,12 +29,10 @@ public class NetworkModule {
 
     private NetworkConfiguration networkConfiguration;
 
-    /*
-     * https://api.myjson.com/bins/1f3vm2*/
-    public NetworkModule(Application applicationContext, final String baseUrl) {
+    public NetworkModule(Application applicationContext) {
 
         this.applicationContext = applicationContext;
-        this.networkConfiguration = new NetworkConfiguration(baseUrl);
+        this.networkConfiguration = new NetworkConfiguration(ApiUrls.getBaseUrl());
     }
 
     private GalaxyNetworkDao getGalaxyNetworkDao(Retrofit retrofit) {
@@ -51,9 +50,9 @@ public class NetworkModule {
      * Actually configures Network Mechanism such has some edits in HTTP clients or event in Retrofit.*/
     private class NetworkConfiguration {
 
-        private final String baseUrl;
+        private final HttpUrl baseUrl;
 
-        NetworkConfiguration(String baseUrl) {
+        NetworkConfiguration(HttpUrl baseUrl) {
             this.baseUrl = baseUrl;
         }
 
