@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +19,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import in.obvious.assignments.cosmos.R;
 import in.obvious.assignments.cosmos.client.foregroundcomponents.base.BaseFragment;
 import in.obvious.assignments.cosmos.client.foregroundcomponents.galaxy.GalaxyViewModel;
 import in.obvious.assignments.cosmos.databinding.FragmentGalaxyGridBinding;
@@ -64,7 +66,9 @@ public class GalaxyGridFragment extends BaseFragment implements GalaxyGridViewCo
         galaxyListAdapter = new GalaxyListAdapter() {
             @Override
             void onGalaxyItemClicked(int galaxyId) {
-
+                Bundle bundle = new Bundle();
+                bundle.putInt("selectedPosition", galaxyId);
+                Navigation.findNavController(view).navigate(R.id.galaxyDetailFragment, bundle);
             }
         };
         recyclerView.setAdapter(galaxyListAdapter);

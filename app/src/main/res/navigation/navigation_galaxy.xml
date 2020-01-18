@@ -9,8 +9,10 @@
         android:name="in.obvious.assignments.cosmos.client.foregroundcomponents.galaxy.gridcomponent.GalaxyGridFragment"
         android:label="GalaxyGridFragment">
         <action
-            android:id="@+id/action_galaxyGridFragment_to_galaxyDetailFragment"
-            app:destination="@id/galaxyDetailFragment" />
+            android:id="@+id/action_movieListFragment_to_movieDetailsFragment"
+            app:destination="@id/galaxyDetailFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/galaxyGridFragment" />
     </fragment>
     <fragment
         android:id="@+id/galaxyDetailFragment"
