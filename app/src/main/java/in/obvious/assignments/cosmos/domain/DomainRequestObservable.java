@@ -16,7 +16,7 @@ import retrofit2.Response;
 /*
  * We control our data flow here. We decide from where data should be fetched depending upon certain conditions.*/
 
-public abstract class DataFlowControl<ResultType> extends Observable<DomainRequest<ResultType>> {
+public abstract class DomainRequestObservable<ResultType> extends Observable<DomainRequest<ResultType>> {
 
 
     private static final String TAG = "DataFlowControl";

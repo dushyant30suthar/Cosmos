@@ -57,6 +57,12 @@ dependencies {
     implementation 'com.google.dagger:dagger:2.24'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.24'
 
+    /*OkHttp Client*/
+    implementation 'commons-io:commons-io:20030203.000550'
+    implementation 'commons-net:commons-net:20030805.205232'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+
     /*
     Retrofit*/
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'

@@ -1,7 +1,88 @@
 package in.obvious.assignments.cosmos.framework.network;
 
+import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
+import java.util.concurrent.TimeUnit;
+
 import dagger.Module;
+import dagger.Provides;
+import in.obvious.assignments.cosmos.BuildConfig;
+import in.obvious.assignments.cosmos.domain.galaxy.datasources.GalaxyNetworkDao;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class NetworkModule {
+
+    private Application applicationContext;
+
+    private NetworkConfiguration networkConfiguration;
+
+    /*
+     * https://api.myjson.com/bins/1f3vm2*/
+    public NetworkModule(Application applicationContext, final String baseUrl) {
+
+        this.applicationContext = applicationContext;
+        this.networkConfiguration = new NetworkConfiguration(baseUrl);
+    }
+
+    private GalaxyNetworkDao getGalaxyNetworkDao(Retrofit retrofit) {
+        return retrofit.create(GalaxyNetworkDao.class);
+    }
+
+    @Provides
+    public GalaxyNetworkDao getGalaxyNetworkDao() {
+        return getGalaxyNetworkDao(networkConfiguration.getRetrofitClient());
+    }
+
+    private class NetworkConfiguration {
+
+        private final String baseUrl;
+
+        NetworkConfiguration(String baseUrl) {
+            this.baseUrl = baseUrl;
+        }
+
+        private OkHttpClient getHttpClient() {
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            httpClient.readTimeout(20, TimeUnit.SECONDS);
+            httpClient.addInterceptor(chain -> {
+                Request original = chain.request();
+                Request request = original.newBuilder()
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            });
+
+            if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor mLogging = new HttpLoggingInterceptor();
+                mLogging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                httpClient.addInterceptor(mLogging);
+            }
+            return httpClient.build();
+        }
+
+        private boolean isNetworkConnected(Context mContext) {
+            ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        }
+
+        Retrofit getRetrofitClient() {
+            return new Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .client(getHttpClient())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+    }
 }
