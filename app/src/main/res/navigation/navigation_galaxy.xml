@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_galaxy"
+    app:startDestination="@id/galaxyGridFragment">
+
+    <fragment
+        android:id="@+id/galaxyGridFragment"
+        android:name="in.obvious.assignments.cosmos.client.foregroundcomponents.galaxy.gridcomponent.GalaxyGridFragment"
+        android:label="GalaxyGridFragment">
+        <action
+            android:id="@+id/action_galaxyGridFragment_to_galaxyDetailFragment"
+            app:destination="@id/galaxyDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/galaxyDetailFragment"
+        android:name="in.obvious.assignments.cosmos.client.foregroundcomponents.galaxy.detailscomponent.GalaxyDetailFragment"
+        android:label="GalaxyDetailFragment" />
+</navigation>
