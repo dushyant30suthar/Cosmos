@@ -6,6 +6,8 @@ import in.obvious.assignments.cosmos.framework.domainprovider.ServiceDomainProvi
 import in.obvious.assignments.cosmos.framework.domainprovider.ViewDomainProvider;
 import in.obvious.assignments.cosmos.framework.network.NetworkModule;
 
+/*
+ * Dagger component which is expected to provide network and database clients to viewModel providers.*/
 @Component(modules = {NetworkModule.class, DatabaseModule.class})
 public interface FrameworkComponent {
 

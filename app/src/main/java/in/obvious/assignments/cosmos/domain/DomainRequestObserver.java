@@ -5,6 +5,10 @@ import androidx.lifecycle.MutableLiveData;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
+/*
+ * Generic observer observing DomainRequestObservable and delivers response from RxObservable to LiveData
+ * which is being observed by ui.*/
+
 public class DomainRequestObserver<ResultType> implements Observer<DomainRequest<ResultType>> {
 
     private MutableLiveData<DomainRequest<ResultType>> responseFromDomain;
@@ -35,9 +39,6 @@ public class DomainRequestObserver<ResultType> implements Observer<DomainRequest
             responseFromDomain.setValue(DomainRequest.failed(domainRequestError, null));
 
         } catch (Exception ex) {
-
-            // IMPORTANT - note that we are fetching the original error message, and not the
-            // exception which led to this catch
 
             domainRequestError = new DomainRequestError();
             domainRequestError.setErrorMessage(e.getMessage());

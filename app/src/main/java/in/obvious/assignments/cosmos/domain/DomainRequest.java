@@ -5,7 +5,8 @@ import androidx.annotation.Nullable;
 
 /*
  * Request object to represent current status of the request sent to domain layer.
- * This object wraps response */
+ * This object wraps response/error.*/
+
 public class DomainRequest<T> {
     private State currentState;
     private T data;

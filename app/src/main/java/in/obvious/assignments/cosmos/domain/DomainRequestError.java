@@ -3,7 +3,9 @@ package in.obvious.assignments.cosmos.domain;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-
+/*
+ * Model representing error encountered in retrieving data whether from
+ * database or network. */
 public class DomainRequestError {
     @SerializedName("message")
     @Expose

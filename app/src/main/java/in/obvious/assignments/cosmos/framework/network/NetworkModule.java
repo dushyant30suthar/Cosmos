@@ -18,6 +18,9 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/*
+ * Module responsible for network operations in entire app.
+ * It just provides retrofitClient of particular DAO to perform request. */
 @Module
 public class NetworkModule {
 
@@ -37,11 +40,15 @@ public class NetworkModule {
         return retrofit.create(GalaxyNetworkDao.class);
     }
 
+    /*
+     * Dao provided by Dagger to repositories to make use of to perform dao requests on network.*/
     @Provides
     public GalaxyNetworkDao getGalaxyNetworkDao() {
         return getGalaxyNetworkDao(networkConfiguration.getRetrofitClient());
     }
 
+    /*
+     * Actually configures Network Mechanism such has some edits in HTTP clients or event in Retrofit.*/
     private class NetworkConfiguration {
 
         private final String baseUrl;
