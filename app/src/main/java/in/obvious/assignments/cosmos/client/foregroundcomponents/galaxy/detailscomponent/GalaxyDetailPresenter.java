@@ -11,6 +11,13 @@ import in.obvious.assignments.cosmos.client.foregroundcomponents.galaxy.GalaxyVi
 import in.obvious.assignments.cosmos.domain.DomainRequest;
 import in.obvious.assignments.cosmos.domain.galaxy.models.Galaxy;
 
+/*
+ * Presenter basically has control of the view. It controls the view by making use of viewController interface.
+ *
+ * We observe values here so that ui can be made dumb and logic could be saperated by ui code.
+ *
+ * We can also use presenter to do ui related calculations i.e. calculations that has to be done after the data
+ * has been retrieved. For example, In this project we sort images by date. We do this thing in presenter only.*/
 public class GalaxyDetailPresenter {
     private GalaxyViewModel galaxyViewModel;
     private GalaxyDetailViewController galaxyDetailViewController;
@@ -22,10 +29,15 @@ public class GalaxyDetailPresenter {
         galaxyViewModel.getGalaxyList();
     }
 
+    /*
+     * If we get error in first attempt then we can let user retry executing request.*/
     public void onRetryClicked() {
         galaxyViewModel.getGalaxyList();
     }
 
+    /*
+     * If there is any change in value of the live data then this method will be called and we will act
+     * accordingly with data.*/
     private void consumeGalaxyListResponse(DomainRequest<List<Galaxy>> galaxyListRequest) {
 
         switch (galaxyListRequest.getCurrentState()) {

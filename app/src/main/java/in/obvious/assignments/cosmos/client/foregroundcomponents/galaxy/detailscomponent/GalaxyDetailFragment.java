@@ -25,12 +25,15 @@ import in.obvious.assignments.cosmos.databinding.FragmentGalaxyDetailBinding;
 import in.obvious.assignments.cosmos.databinding.ItemViewPagerGalaxyDetailsBinding;
 import in.obvious.assignments.cosmos.domain.galaxy.models.Galaxy;
 import in.obvious.assignments.cosmos.framework.application.CosmosApplication;
-import in.obvious.assignments.cosmos.framework.domainprovider.ViewDomainProvider;
+import in.obvious.assignments.cosmos.framework.viewmodelfactory.ViewModelFactory;
 
+/*
+ * Fragment which hosts details view of galaxy. Has ViewPager implemented so that we can swipe through galaxies
+ * to get details of other galaxies which going back and selecting other galaxy to get details. */
 public class GalaxyDetailFragment extends BaseFragment implements GalaxyDetailViewController {
 
     @Inject
-    ViewDomainProvider viewDomainProvider;
+    ViewModelFactory viewModelFactory;
 
     private FragmentGalaxyDetailBinding fragmentGalaxyDetailBinding;
     private GalaxyDetailPresenter galaxyDetailPresenter;
@@ -46,13 +49,17 @@ public class GalaxyDetailFragment extends BaseFragment implements GalaxyDetailVi
         return getView() != null ? getView() : fragmentGalaxyDetailBinding.getRoot();
     }
 
+    /*
+     * Get ViewModel from the factory and store it for this session*/
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         CosmosApplication.getViewModelComponent().doInjection(this);
-        galaxyViewModel = ViewModelProviders.of(this, viewDomainProvider).get(GalaxyViewModel.class);
+        galaxyViewModel = ViewModelProviders.of(this, viewModelFactory).get(GalaxyViewModel.class);
         super.onViewCreated(view, savedInstanceState);
     }
 
+    /*
+     * Callback for retrieving arguments from previous fragment and storing it for this screen.*/
     @Override
     protected void setUpArgumentData() {
         selectedPosition = getArguments().getInt("selectedPosition");
@@ -65,6 +72,9 @@ public class GalaxyDetailFragment extends BaseFragment implements GalaxyDetailVi
         viewPager.setAdapter(viewPagerAdapter);
     }
 
+    /*
+     * Now everything in the ui has been set up. It's time for presenter to control things. We pass
+     * view model, view controller and lifecycle owner to the presenter to observe data on view model.*/
     @Override
     protected void setUpPresenter() {
         galaxyDetailPresenter = new GalaxyDetailPresenter(galaxyViewModel, this);
@@ -75,12 +85,16 @@ public class GalaxyDetailFragment extends BaseFragment implements GalaxyDetailVi
 
     }
 
+    /*
+     * Setting list to view pager*/
     @Override
     public void addGalaxyListToViewPager(List<Galaxy> galaxyList) {
         viewPagerAdapter.setGalaxyList(galaxyList);
         viewPager.setCurrentItem(selectedPosition, false);
     }
 
+    /*
+     * Showing loading on request execution.*/
     @Override
     public void showLoading(boolean status) {
         if (status)
@@ -89,6 +103,10 @@ public class GalaxyDetailFragment extends BaseFragment implements GalaxyDetailVi
             fragmentGalaxyDetailBinding.galaxyDetailsProgressBar.setVisibility(View.GONE);
     }
 
+    /*
+     * If there is some error retrieving data from network or even from database then we will
+     * show error to the user. Right now the errors are very much technical which can be made ofcourse be
+     * simpler for user.*/
     @Override
     public void showError(String message) {
         Snackbar snackbar = Snackbar
@@ -97,6 +115,8 @@ public class GalaxyDetailFragment extends BaseFragment implements GalaxyDetailVi
         snackbar.show();
     }
 
+    /*
+     * Adapter for view pager to show galaxy details on swiping right or left*/
     class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.GalaxyDetailsViewHolder> {
 
         private List<Galaxy> galaxyList;

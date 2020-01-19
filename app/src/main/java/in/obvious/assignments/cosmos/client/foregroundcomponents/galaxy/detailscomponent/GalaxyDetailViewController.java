@@ -5,6 +5,9 @@ import java.util.List;
 import in.obvious.assignments.cosmos.client.foregroundcomponents.base.BaseViewController;
 import in.obvious.assignments.cosmos.domain.galaxy.models.Galaxy;
 
+/*
+ * Controller methods exposed to GalaxyDetailPresenter to control the view in
+ * GalaxyDetailFragment. */
 public interface GalaxyDetailViewController extends BaseViewController {
     void addGalaxyListToViewPager(List<Galaxy> galaxyList);
 

@@ -14,7 +14,7 @@ import in.obvious.assignments.cosmos.framework.utils.TaskExecutors;
 import io.reactivex.schedulers.Schedulers;
 
 /*
- * Every view component has to have one viewmodel attached to it. It will store data in RAM on orientation changes or things like that.*/
+ * Every view component has to have one viewmodel attached to it. It will store data in RAM even in orientation changes or things like that.*/
 public class GalaxyViewModel extends ViewModel {
 
     private GalaxyRepository galaxyRepository;
@@ -29,6 +29,8 @@ public class GalaxyViewModel extends ViewModel {
         galaxyListRequest = new MutableLiveData<>();
     }
 
+    /*
+     * Observes RxObservable and put data into the live data passed in the request.*/
     public void getGalaxyList() {
 
         galaxyRepository.getGalaxyListObservable()
@@ -37,6 +39,8 @@ public class GalaxyViewModel extends ViewModel {
                 .subscribe(new DomainRequestObserver<>(galaxyListRequest));
     }
 
+    /*
+     * Returns the live data to be observed. */
     public LiveData<DomainRequest<List<Galaxy>>> getGalaxyListRequestObservable() {
         return galaxyListRequest;
     }

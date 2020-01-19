@@ -27,12 +27,14 @@ import in.obvious.assignments.cosmos.databinding.FragmentGalaxyGridBinding;
 import in.obvious.assignments.cosmos.databinding.ItemGalaxyGridBinding;
 import in.obvious.assignments.cosmos.domain.galaxy.models.Galaxy;
 import in.obvious.assignments.cosmos.framework.application.CosmosApplication;
-import in.obvious.assignments.cosmos.framework.domainprovider.ViewDomainProvider;
+import in.obvious.assignments.cosmos.framework.viewmodelfactory.ViewModelFactory;
 
+/*
+ * Class presenting grid of all of the galaxies present in the response. */
 public class GalaxyGridFragment extends BaseFragment implements GalaxyGridViewController {
 
     @Inject
-    ViewDomainProvider viewDomainProvider;
+    ViewModelFactory viewModelFactory;
 
     private FragmentGalaxyGridBinding fragmentGalaxyGridBinding;
     private GalaxyGridViewPresenter galaxyGridViewPresenter;
@@ -48,13 +50,17 @@ public class GalaxyGridFragment extends BaseFragment implements GalaxyGridViewCo
         return getView() != null ? getView() : fragmentGalaxyGridBinding.getRoot();
     }
 
+    /*
+     * Getting instance of viewModel for this view*/
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         CosmosApplication.getViewModelComponent().doInjection(this);
-        galaxyViewModel = ViewModelProviders.of(this, viewDomainProvider).get(GalaxyViewModel.class);
+        galaxyViewModel = ViewModelProviders.of(this, viewModelFactory).get(GalaxyViewModel.class);
         super.onViewCreated(view, savedInstanceState);
     }
 
+    /*
+     * Launching fragment so nothing to grab from previous screen. */
     @Override
     protected void setUpArgumentData() {
 
@@ -75,6 +81,14 @@ public class GalaxyGridFragment extends BaseFragment implements GalaxyGridViewCo
         recyclerView.setAdapter(galaxyListAdapter);
     }
 
+    /*
+     * Setting up presenter to let it control view. Because all of the behaviour of this view should be
+     * controlled by presenter by this way we can separate view code from logic code.
+     *
+     * We are passing interface implementation of galaxyGridViewController so that it can control this view.
+     * We are passing life cycle owner which is derived from current view not fragment so that it doesn't
+     * attach observer to same observable on going back and forth.
+     * We are passing view model.*/
     @Override
     protected void setUpPresenter() {
         galaxyGridViewPresenter = new GalaxyGridViewPresenter(galaxyViewModel, this);

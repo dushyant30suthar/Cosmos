@@ -11,6 +11,8 @@ import in.obvious.assignments.cosmos.client.foregroundcomponents.galaxy.GalaxyVi
 import in.obvious.assignments.cosmos.domain.DomainRequest;
 import in.obvious.assignments.cosmos.domain.galaxy.models.Galaxy;
 
+/*
+ * Presenter to control GalaxyGridViewFragment.*/
 public class GalaxyGridViewPresenter {
     private GalaxyViewModel galaxyViewModel;
     private GalaxyGridViewController galaxyGridViewController;
@@ -22,10 +24,14 @@ public class GalaxyGridViewPresenter {
         galaxyViewModel.getGalaxyList();
     }
 
+    /*
+     * To let user retry getting data if anything has happened wrong*/
     public void onRetryClicked() {
         galaxyViewModel.getGalaxyList();
     }
 
+    /*
+     * Consume response from the datasources here and let view act according to the state of request.*/
     private void consumeGalaxyListResponse(DomainRequest<List<Galaxy>> galaxyListRequest) {
 
         switch (galaxyListRequest.getCurrentState()) {

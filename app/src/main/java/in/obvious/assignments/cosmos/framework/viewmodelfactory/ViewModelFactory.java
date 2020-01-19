@@ -1,4 +1,4 @@
-package in.obvious.assignments.cosmos.framework.domainprovider;
+package in.obvious.assignments.cosmos.framework.viewmodelfactory;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
@@ -13,7 +13,7 @@ import in.obvious.assignments.cosmos.domain.galaxy.datasources.GalaxyNetworkDao;
 import in.obvious.assignments.cosmos.framework.application.CosmosApplication;
 import in.obvious.assignments.cosmos.framework.utils.TaskExecutors;
 
-public class ViewDomainProvider implements ViewModelProvider.Factory {
+public class ViewModelFactory implements ViewModelProvider.Factory {
 
     @Inject
     GalaxyNetworkDao galaxyNetworkDao;
@@ -29,7 +29,7 @@ public class ViewDomainProvider implements ViewModelProvider.Factory {
      *
      * There should not be any other way we be instanciating repositories other than this class. If there is service which needs to have repository then it also
      * must have some class which mimics viewModel for service. */
-    public ViewDomainProvider() {
+    public ViewModelFactory() {
 
         CosmosApplication.getClientComponent().doInjection(this);
 

@@ -5,6 +5,8 @@ import java.util.List;
 import in.obvious.assignments.cosmos.client.foregroundcomponents.base.BaseViewController;
 import in.obvious.assignments.cosmos.domain.galaxy.models.Galaxy;
 
+/*
+ * Methods to let presenter to control galaxyGridViewFragment*/
 public interface GalaxyGridViewController extends BaseViewController {
     void showGalaxyList(List<Galaxy> galaxyList);
 
