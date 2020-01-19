@@ -29,13 +29,15 @@ public class GalaxyViewModel extends ViewModel {
         galaxyListRequest = new MutableLiveData<>();
     }
 
-    public LiveData<DomainRequest<List<Galaxy>>> getGalaxyList() {
+    public void getGalaxyList() {
 
         galaxyRepository.getGalaxyListObservable()
                 .subscribeOn(Schedulers.from(taskExecutors.getNetworkOperationThread()))
                 .observeOn(Schedulers.from(taskExecutors.getMainThread()))
                 .subscribe(new DomainRequestObserver<>(galaxyListRequest));
+    }
 
+    public LiveData<DomainRequest<List<Galaxy>>> getGalaxyListRequestObservable() {
         return galaxyListRequest;
     }
 

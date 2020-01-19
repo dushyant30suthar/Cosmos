@@ -61,6 +61,9 @@ public abstract class DomainRequestObservable<ResultType> extends Observable<Dom
 
                 dataFromNetwork = response.body();
 
+                clearPreviousData();
+                saveDataToDatabase(dataFromNetwork);
+
                 requestObserver.onNext(DomainRequest.succeed(dataFromNetwork, response.code()));
 
             } else if (response.errorBody() != null) {
@@ -81,17 +84,6 @@ public abstract class DomainRequestObservable<ResultType> extends Observable<Dom
             e.printStackTrace();
             onFetchFailed(e);
         }
-
-        /*ResultType processedData = processResponse(dataFromNetwork);
-
-        if (processedData == null) {
-            requestObserver.onNext(DataRequest.failed("Not Found", null));
-        } else {
-            clearPreviousData();
-            saveDataToDatabase(processedData);
-            resultFromDatabase = loadFromDatabase();
-            requestObserver.onNext(DataRequest.succeed(resultFromDatabase));
-        }*/
     }
 
 

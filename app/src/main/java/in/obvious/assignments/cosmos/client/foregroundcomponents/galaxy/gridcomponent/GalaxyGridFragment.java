@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +87,10 @@ public class GalaxyGridFragment extends BaseFragment implements GalaxyGridViewCo
 
     @Override
     public void showError(String message) {
-
+        Snackbar snackbar = Snackbar
+                .make(fragmentGalaxyGridBinding.getRoot(), message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry", view -> galaxyGridViewPresenter.onRetryClicked());
+        snackbar.show();
     }
 
     @Override

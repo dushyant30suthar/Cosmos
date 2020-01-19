@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +91,10 @@ public class GalaxyDetailFragment extends BaseFragment implements GalaxyDetailVi
 
     @Override
     public void showError(String message) {
-
+        Snackbar snackbar = Snackbar
+                .make(fragmentGalaxyDetailBinding.getRoot(), message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("Retry", view -> galaxyDetailPresenter.onRetryClicked());
+        snackbar.show();
     }
 
     class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.GalaxyDetailsViewHolder> {

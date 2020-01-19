@@ -13,7 +13,12 @@ public class GalaxyGridViewPresenter {
     public GalaxyGridViewPresenter(GalaxyViewModel galaxyViewModel, GalaxyGridViewController galaxyGridViewController) {
         this.galaxyViewModel = galaxyViewModel;
         this.galaxyGridViewController = galaxyGridViewController;
-        galaxyViewModel.getGalaxyList().observe(galaxyGridViewController.getLifeCycleOwner(), this::consumeGalaxyListResponse);
+        galaxyViewModel.getGalaxyListRequestObservable().observe(galaxyGridViewController.getLifeCycleOwner(), this::consumeGalaxyListResponse);
+        galaxyViewModel.getGalaxyList();
+    }
+
+    public void onRetryClicked() {
+        galaxyViewModel.getGalaxyList();
     }
 
     private void consumeGalaxyListResponse(DomainRequest<List<Galaxy>> galaxyListRequest) {
@@ -37,6 +42,7 @@ public class GalaxyGridViewPresenter {
                 /*
                  * We can further classify error into various error according to error codes, in ui or in repository or
                  * at any convenient place.*/
+                galaxyGridViewController.showLoading(false);
                 galaxyGridViewController.showError(galaxyListRequest.getDomainRequestError().getErrorMessage());
             }
             break;
