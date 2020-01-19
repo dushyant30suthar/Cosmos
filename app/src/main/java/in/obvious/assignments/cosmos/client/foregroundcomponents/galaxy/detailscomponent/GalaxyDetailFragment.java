@@ -82,7 +82,10 @@ public class GalaxyDetailFragment extends BaseFragment implements GalaxyDetailVi
 
     @Override
     public void showLoading(boolean status) {
-
+        if (status)
+            fragmentGalaxyDetailBinding.galaxyDetailsProgressBar.setVisibility(View.VISIBLE);
+        else
+            fragmentGalaxyDetailBinding.galaxyDetailsProgressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -114,7 +117,7 @@ public class GalaxyDetailFragment extends BaseFragment implements GalaxyDetailVi
         public void onBindViewHolder(GalaxyDetailsViewHolder holder, int position) {
             Galaxy galaxy = galaxyList.get(position);
             holder.bind(galaxy);
-            Glide.with(holder.itemView).load(galaxy.getUrl()).into(holder.itemViewPagerGalaxyDetailsBinding.galaxyImageView);
+            Glide.with(holder.itemView).load(galaxy.getHdurl()).into(holder.itemViewPagerGalaxyDetailsBinding.galaxyImageView);
         }
 
         @Override
