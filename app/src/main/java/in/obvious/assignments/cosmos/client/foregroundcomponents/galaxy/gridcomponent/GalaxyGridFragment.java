@@ -133,7 +133,7 @@ public class GalaxyGridFragment extends BaseFragment implements GalaxyGridViewCo
         @Override
         public void onBindViewHolder(@NonNull GalaxyListViewHolder holder, int position) {
             Galaxy galaxy = galaxyList.get(position);
-            holder.galaxyItemBinding.getRoot().setOnClickListener(v -> onGalaxyItemClicked(galaxy.getGalaxyId()));
+            holder.galaxyItemBinding.getRoot().setOnClickListener(v -> onGalaxyItemClicked(position));
             holder.bind(galaxy);
             Glide.with(holder.itemView).load(galaxy.getUrl()).into(holder.galaxyItemBinding.galaxyImageView);
         }

@@ -1,5 +1,10 @@
 package in.obvious.assignments.cosmos.client.foregroundcomponents.galaxy.detailscomponent;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import in.obvious.assignments.cosmos.client.foregroundcomponents.galaxy.GalaxyViewModel;
@@ -34,6 +39,20 @@ public class GalaxyDetailPresenter {
             case SUCCEED: {
                 galaxyDetailViewController.showLoading(false);
                 if (galaxyListRequest.getData() != null) {
+                    final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    Collections.sort(galaxyListRequest.getData(), new Comparator<Galaxy>() {
+                        @Override
+                        public int compare(Galaxy galaxy2, Galaxy galaxy1) {
+                            try {
+                                Date date1 = sdf.parse(galaxy1.getDate());
+                                Date date2 = sdf.parse(galaxy2.getDate());
+                                return date1.compareTo(date2);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            return 0;
+                        }
+                    });
                     galaxyDetailViewController.addGalaxyListToViewPager(galaxyListRequest.getData());
                 }
             }

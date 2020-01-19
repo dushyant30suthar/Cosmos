@@ -78,7 +78,7 @@ public class GalaxyDetailFragment extends BaseFragment implements GalaxyDetailVi
     @Override
     public void addGalaxyListToViewPager(List<Galaxy> galaxyList) {
         viewPagerAdapter.setGalaxyList(galaxyList);
-        viewPager.setCurrentItem(selectedPosition);
+        viewPager.setCurrentItem(selectedPosition, false);
     }
 
     @Override
