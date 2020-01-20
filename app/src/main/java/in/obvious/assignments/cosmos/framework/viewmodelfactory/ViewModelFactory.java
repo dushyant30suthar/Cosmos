@@ -19,6 +19,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     GalaxyNetworkDao galaxyNetworkDao;
     @Inject
     GalaxyDatabaseDao galaxyDatabaseDao;
+    @Inject
+    TaskExecutors taskExecutors;
 
     private GalaxyRepository galaxyRepository;
 
@@ -34,7 +36,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         CosmosApplication.getClientComponent().doInjection(this);
 
 
-        this.galaxyRepository = new GalaxyRepository(galaxyNetworkDao, galaxyDatabaseDao);
+        this.galaxyRepository = new GalaxyRepository(galaxyNetworkDao, galaxyDatabaseDao, taskExecutors);
 
     }
 
@@ -46,7 +48,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
          * Here we can create various view Models.*/
 
         if (modelClass.isAssignableFrom(GalaxyViewModel.class)) {
-            return (T) new GalaxyViewModel(galaxyRepository, TaskExecutors.getInstance());
+            return (T) new GalaxyViewModel(galaxyRepository);
         } else {
             throw new IllegalArgumentException("Unknown class name");
         }
