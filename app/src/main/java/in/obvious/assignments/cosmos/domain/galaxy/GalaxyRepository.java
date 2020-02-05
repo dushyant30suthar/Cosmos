@@ -7,10 +7,13 @@ import java.util.List;
 import in.obvious.assignments.cosmos.domain.DomainRequest;
 import in.obvious.assignments.cosmos.domain.DomainRequestObservable;
 import in.obvious.assignments.cosmos.domain.DomainRequestObserver;
+import in.obvious.assignments.cosmos.domain.DomainUpdateRequest;
 import in.obvious.assignments.cosmos.domain.galaxy.datasources.GalaxyDatabaseDao;
 import in.obvious.assignments.cosmos.domain.galaxy.datasources.GalaxyNetworkDao;
 import in.obvious.assignments.cosmos.domain.galaxy.models.Galaxy;
 import in.obvious.assignments.cosmos.framework.utils.TaskExecutors;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 
@@ -82,4 +85,43 @@ public class GalaxyRepository {
         };
     }
 
+    private DomainUpdateRequest<Void> getGalaxyUpdateObservable(int id, boolean isBookmarked) {
+        return new DomainUpdateRequest<Void>() {
+            @Override
+            public Throwable updateData() {
+                try {
+                    galaxyDatabaseDao.bookmarkGalaxy(id, isBookmarked);
+                } catch (Exception e) {
+                    return e;
+                }
+                return null;
+            }
+        };
+    }
+
+    public void bookmarkGalaxt(int id, boolean status) {
+        getGalaxyUpdateObservable(id, status).subscribeOn(Schedulers.from(taskExecutors.getNetworkOperationThread()))
+                .observeOn(Schedulers.from(taskExecutors.getMainThread()))
+                .subscribe(new Observer<DomainRequest<Void>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(DomainRequest<Void> voidDomainRequest) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 }
