@@ -23,4 +23,7 @@ public interface GalaxyDatabaseDao {
 
     @Query("DELETE FROM galaxy")
     void removeAllGalaxies();
+
+    @Query("UPDATE galaxy SET isBookmarked = :bookmarkStatus WHERE galaxyId == :id")
+    void bookmarkGalaxy(int id, boolean bookmarkStatus);
 }

@@ -37,6 +37,9 @@ public class Galaxy {
     @SerializedName("url")
     @Expose
     private String url;
+    @SerializedName("isBookmarked")
+    @Expose
+    private boolean isBookmarked;
 
     public String getCopyright() {
         return copyright;
@@ -108,5 +111,13 @@ public class Galaxy {
 
     public void setGalaxyId(int galaxyId) {
         this.galaxyId = galaxyId;
+    }
+
+    public boolean isBookmarked() {
+        return isBookmarked;
+    }
+
+    public void setBookmarked(boolean bookmarked) {
+        isBookmarked = bookmarked;
     }
 }
