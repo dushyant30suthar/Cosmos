@@ -9,7 +9,7 @@ import retrofit2.http.GET;
 
 public interface GalaxyNetworkDao {
 
-    @GET("bins/1f3vm2")
+    @GET("b/5fc20e0f045eb86f1f88241a")
     Call<List<Galaxy>> getGalaxyList();
 
 }

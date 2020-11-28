@@ -63,6 +63,7 @@ public class NetworkModule {
             httpClient.addInterceptor(chain -> {
                 Request original = chain.request();
                 Request request = original.newBuilder()
+                        .header("secret-key", "$2b$10$z2.yH9TLgj/xg5HyGfzrhOXDfUp9Dy9HZaoWSXEIWPilW5l.pZuQ.")
                         .method(original.method(), original.body())
                         .build();
                 return chain.proceed(request);

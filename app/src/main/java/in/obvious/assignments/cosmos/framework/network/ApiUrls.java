@@ -12,7 +12,7 @@ public class ApiUrls {
      * https://api.myjson.com/bins/1f3vm2*/
 
     private static HttpUrl.Builder httpUrl;
-    private static String AUTHORITY = "api.myjson.com";
+    private static String AUTHORITY = "api.jsonbin.io";
     private static String PROTOCOL_SCHEME = "https";
 
     private static HttpUrl.Builder getHttpUrlBuilder() {
